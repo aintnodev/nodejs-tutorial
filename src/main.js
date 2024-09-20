@@ -17,6 +17,10 @@
 
 const express = require("express");
 const app = express();
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 const PORT = 3000;
 
 const customers = [
@@ -57,6 +61,11 @@ app.get("/api/customers", (req, res) => {
 
 app.post("/", (req, res) => {
   res.send("This is a POST request.");
+});
+
+app.post("/api/customers", (req, res) => {
+  console.log(req.body);
+  res.send(req.body);
 });
 
 app.listen(PORT, () => {
