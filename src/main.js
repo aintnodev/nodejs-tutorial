@@ -19,8 +19,40 @@ const express = require("express");
 const app = express();
 const PORT = 3000;
 
+const customers = [
+  {
+    fname: "Rick",
+    lname: "Sanchez",
+    reality: "c-137",
+  },
+  {
+    fname: "Morty",
+    lname: "Smith",
+    reality: "c-137",
+  },
+  {
+    fname: "Beth",
+    lname: "Smith",
+    reality: "c-131",
+  },
+  {
+    fname: "Summer",
+    lname: "Smith",
+    reality: "c-131",
+  },
+  {
+    fname: "Jerry",
+    lname: "Smith",
+    reality: "5126",
+  },
+];
+
 app.get("/", (req, res) => {
   res.send("This is a GET request.");
+});
+
+app.get("/api/customers", (req, res) => {
+  res.send({ customers: customers });
 });
 
 app.post("/", (req, res) => {
