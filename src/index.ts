@@ -19,9 +19,10 @@ const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 
-const Customer = require("./models/customers");
-const cors = require("cors");
+import Customer from "./models/customers";
+import { Request, Response } from "express";
 
+const cors = require("cors");
 const app = express();
 
 dotenv.config();
@@ -40,11 +41,11 @@ const customer = new Customer({
 
 // customer.save();
 
-app.get("/", (req, res) => {
+app.get("/", (req: Request, res: Response) => {
   res.send(customer);
 });
 
-app.get("/api/customers", async (req, res) => {
+app.get("/api/customers", async (req: Request, res: Response) => {
   // console.log(await mongoose.connection.db.listCollections().toArray());
   try {
     const result = await Customer.find();
@@ -54,7 +55,7 @@ app.get("/api/customers", async (req, res) => {
   }
 });
 
-app.get("/api/customers/:id", async (req, res) => {
+app.get("/api/customers/:id", async (req: Request, res: Response) => {
   console.log({
     requestParams: req.params,
     requestQuery: req.query,
@@ -72,7 +73,7 @@ app.get("/api/customers/:id", async (req, res) => {
   }
 });
 
-app.get("/api/orders/:id", async (req, res) => {
+app.get("/api/orders/:id", async (req: Request, res: Response) => {
   console.log(req.params.id);
   const orderId = req.params.id;
   try {
@@ -80,7 +81,6 @@ app.get("/api/orders/:id", async (req, res) => {
     if (order) {
       res.json(order);
     } else {
-      console.log(e.message);
       res.status(404).json({ error: "order not found" });
     }
   } catch (e) {
@@ -89,7 +89,7 @@ app.get("/api/orders/:id", async (req, res) => {
   }
 });
 
-app.put("/api/customers/:id", async (req, res) => {
+app.put("/api/customers/:id", async (req: Request, res: Response) => {
   try {
     const customerId = req.params.id;
     const customer = await Customer.findOneAndReplace(
@@ -104,7 +104,7 @@ app.put("/api/customers/:id", async (req, res) => {
   }
 });
 
-app.patch("/api/customers/:id", async (req, res) => {
+app.patch("/api/customers/:id", async (req: Request, res: Response) => {
   try {
     const customerId = req.params.id;
     const customer = await Customer.findOneAndUpdate(
@@ -119,7 +119,7 @@ app.patch("/api/customers/:id", async (req, res) => {
   }
 });
 
-app.patch("/api/orders/:id", async (req, res) => {
+app.patch("/api/orders/:id", async (req: Request, res: Response) => {
   console.log(req.params);
   const orderId = req.params.id;
   req.body._id = orderId;
@@ -140,7 +140,7 @@ app.patch("/api/orders/:id", async (req, res) => {
   }
 });
 
-app.delete("/api/customers/:id", async (req, res) => {
+app.delete("/api/customers/:id", async (req: Request, res: Response) => {
   try {
     const customerId = req.params.id;
     const result = await Customer.deleteOne({ _id: customerId });
@@ -150,11 +150,11 @@ app.delete("/api/customers/:id", async (req, res) => {
   }
 });
 
-app.post("/", (req, res) => {
+app.post("/", (req: Request, res: Response) => {
   res.send(customer);
 });
 
-app.post("/api/customers", async (req, res) => {
+app.post("/api/customers", async (req: Request, res: Response) => {
   console.log(req.body);
   const customer = new Customer(req.body);
   try {
