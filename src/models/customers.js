@@ -6,6 +6,12 @@ const customerSchema = new mongoose.Schema({
     required: true,
   },
   industry: String,
+  orders: [
+    {
+      description: String,
+      amountInCents: Number,
+    },
+  ],
 });
 
 module.exports = mongoose.model("Customer", customerSchema);
