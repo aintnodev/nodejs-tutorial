@@ -87,6 +87,42 @@ app.put("/api/customers/:id", async (req, res) => {
   }
 });
 
+app.patch("/api/customers/:id", async (req, res) => {
+  try {
+    const customerId = req.params.id;
+    const customer = await Customer.findOneAndUpdate(
+      { _id: customerId },
+      req.body,
+      { new: true },
+    );
+    console.log(customer);
+    res.json({ customer });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+app.patch("/api/orders/:id", async (req, res) => {
+  console.log(req.params);
+  const orderId = req.params.id;
+  req.body._id = orderId;
+  try {
+    const result = await Customer.findOneAndUpdate(
+      { "orders._id": orderId },
+      { $set: { "orders.$": req.body } },
+      { new: true },
+    );
+    console.log(result);
+    if (result) {
+      res.json(result);
+    } else {
+      res.status(404).json({ error: "something went wrong" });
+    }
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
 app.delete("/api/customers/:id", async (req, res) => {
   try {
     const customerId = req.params.id;
