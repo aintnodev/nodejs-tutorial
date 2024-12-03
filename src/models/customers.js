@@ -1,12 +1,11 @@
 const mongoose = require("mongoose");
 
 const customerSchema = new mongoose.Schema({
-  fname: {
+  name: {
     type: String,
     required: true,
   },
-  lname: String,
-  reality: String,
+  industry: String,
 });
 
 module.exports = mongoose.model("Customer", customerSchema);

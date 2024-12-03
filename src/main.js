@@ -20,49 +20,22 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 
 const Customer = require("./models/customers");
+const cors = require("cors");
 
 const app = express();
 
 dotenv.config();
 mongoose.set("strictQuery", false);
 
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 const PORT = process.env.PORT || 3000;
 
-const customers = [
-  {
-    fname: "Rick",
-    lname: "Sanchez",
-    reality: "c-137",
-  },
-  {
-    fname: "Morty",
-    lname: "Smith",
-    reality: "c-137",
-  },
-  {
-    fname: "Beth",
-    lname: "Smith",
-    reality: "c-131",
-  },
-  {
-    fname: "Summer",
-    lname: "Smith",
-    reality: "c-131",
-  },
-  {
-    fname: "Jerry",
-    lname: "Smith",
-    reality: "5126",
-  },
-];
-
 const customer = new Customer({
-  fname: "another",
-  lname: "customer",
-  reality: "nothing",
+  name: "new customer",
+  industry: "music",
 });
 
 // customer.save();
