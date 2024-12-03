@@ -72,6 +72,23 @@ app.get("/api/customers/:id", async (req, res) => {
   }
 });
 
+app.get("/api/orders/:id", async (req, res) => {
+  console.log(req.params.id);
+  const orderId = req.params.id;
+  try {
+    const order = await Customer.findOne({ "orders._id": orderId });
+    if (order) {
+      res.json(order);
+    } else {
+      console.log(e.message);
+      res.status(404).json({ error: "order not found" });
+    }
+  } catch (e) {
+    console.log(e.message);
+    res.status(500).json({ error: "something went wrong" });
+  }
+});
+
 app.put("/api/customers/:id", async (req, res) => {
   try {
     const customerId = req.params.id;
